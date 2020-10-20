@@ -6,7 +6,7 @@ DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data")
 patches = json.load(open(os.path.join(DATA_PATH, "patches.json")))
 
 for project_name in patches:
-  for (commit_id) in patches[project_name].keys():
+  for (commit_id) in patches[project_name].copy().keys():
     patches[project_name][commit_id[0:8]] = patches[project_name][commit_id]
 bugs = []
 for project_name in os.listdir(DATA_PATH):
@@ -39,6 +39,6 @@ for project_name in os.listdir(DATA_PATH):
           bug['rt' + repair_tool] = True
       bugs += [bug]
 
-print "Processed %d bugs" % len(bugs)
+print ("Processed %d bugs" % len(bugs))
 with open(os.path.join(DATA_PATH, "..", "docs", "data", "bugs.json"), "w") as fd:
   json.dump(bugs, fd)
